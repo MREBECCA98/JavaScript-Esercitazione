@@ -67,15 +67,19 @@ console.log("numero casuale tra 1 e 6:", dice());
 /* ESERCIZIO 2
   Crea una funzione chiamata "whoIsBigger" che riceve due numeri come parametri e ritorna il maggiore dei due.
 */ function whoIsBigger(num1, num2) {
+  let maggiore = 0;
   if (num1 > num2) {
-    console.log("il numero maggiore è:", num1);
-  } else num1 < num2;
-  {
-    console.log("il numero maggiore è:", num2);
+    console.log("il numero maggiore è ris1:", num1);
+    maggiore = num1;
+  } else {
+    console.log("il numero maggiore è ris2:", num2);
+    maggiore = num2;
   }
-  return num1 > num2; // chiedere come fare per far uscire il numero e non true of false
+
+  return maggiore; // chiedere come fare per far uscire il numero e non true of false
 }
 const risultato = whoIsBigger(5, 10);
+
 console.log(risultato);
 
 /* ESERCIZIO 3
@@ -85,7 +89,19 @@ console.log(risultato);
 */
 //TODO
 function splitMe(testo) {
-  return testo.split(" ");
+  let arrayDaRitornare = [];
+  let arrayDiStringhe = testo.split(" ");
+  for (let i = 0; i < arrayDiStringhe.length; i++) {
+    const parola1 = arrayDiStringhe[i];
+
+    const primaLetteraM = parola1[0].toUpperCase();
+    const restoParola = parola1.substring(1);
+    const parola1ritornata = primaLetteraM + restoParola;
+
+    arrayDaRitornare[i] = parola1ritornata;
+  }
+
+  return arrayDaRitornare;
 }
 let testoArray = splitMe("ciao sono rebecca");
 
@@ -95,16 +111,16 @@ console.log(testoArray);
   Crea una funzione chiamata "deleteOne" che riceve una stringa e un booleano come parametri.
   Se il valore booleano è true la funzione deve ritornare la stringa senza il primo carattere, altrimenti la deve ritornare senza l'ultimo.
 */
-//to do
-// function deleteOne(str, booleano) {
-//   if (booleano) {
-//     return str.slice(1);
-//   } else {
-//     return str.slice(0, -1);
-//   }
-// }
 
-// console.log(deleteOne());
+function deleteOne(str, booleano) {
+  if (booleano) {
+    return str.slice(1);
+  } else {
+    return str.slice(0, -1);
+  }
+}
+
+console.log(deleteOne("ciao", !true));
 
 /* ESERCIZIO 5
   Crea una funzione chiamata "onlyLetters" che riceve una stringa come parametro e la ritorna eliminando tutte le cifre numeriche.
@@ -120,7 +136,17 @@ onlyLetters("I have 4 dogs");
 /* ESERCIZIO 6
   Crea una funzione chiamata "isThisAnEmail" che riceve una stringa come parametro e ritorna true se la stringa è un valido indirizzo email.
 */
-function inThisAnEmail() {}
+function inThisAnEmail(newEmail) {
+  let email = "reb.matarozzo@gmail.com";
+  if (newEmail === email) {
+    console.log("l'email è valida", newEmail);
+    return true;
+  } else {
+    console.log("l'email non è valida", newEmail);
+    return false;
+  }
+}
+console.log(inThisAnEmail("reb.matarozzo@gmail.com"));
 /* ESERCIZIO 7
   Scrivi una funzione chiamata "whatDayIsIt" che ritorna il giorno della settimana corrente.
 */
@@ -143,15 +169,52 @@ console.log(whatDayIsIt());
       values: [3, 3, 4]
   }
 */
+function rollTheDices(num) {
+  let sumValue = 0;
+  let numGenerati = [];
+  for (let i = 0; i < num; i++) {
+    let invocare = dice();
+    sumValue = invocare + sumValue;
+    numGenerati.push(invocare);
+  }
+
+  let oggetto = { sum: sumValue, values: numGenerati };
+
+  return oggetto; //oggetto=lista di chiavi con dei valori associati
+}
+
+const risultatoDice = rollTheDices(5);
+console.log("rolls", risultatoDice);
 
 /* ESERCIZIO 9
   Scrivi una funzione chiamata "howManyDays" che riceve una data come parametro e ritorna il numero di giorni trascorsi da tale data.
 */
+function howManyDays(date) {
+  const dataOggi = new Date();
+  const dataRichiesta = new Date(date);
+
+  dataOggi.setHours(1, 0, 0, 0);
+  const millisecondi = dataOggi - dataRichiesta;
+
+  const numeroGiorniTrascorsi = millisecondi / (1000 * 60 * 60 * 24);
+
+  return numeroGiorniTrascorsi;
+}
+const risulatoGiorni = howManyDays("2025-12-25");
+console.log("differenza giorni", risulatoGiorni);
 
 /* ESERCIZIO 10
   Scrivi una funzione chiamata "isTodayMyBirthday" che deve ritornare true se oggi è il tuo compleanno, falso negli altri casi.
 */
-
+function isTodayMyBirthday(myDay) {
+  const data = new Date();
+  const myB = new Date(myDay);
+  const isMyB = data.getMonth() == myB.getMonth() && data.getDate() == myB.getDate();
+  return isMyB;
+}
+const todayMyB = isTodayMyBirthday("12-09");
+console.log(todayMyB);
+console.log(isTodayMyBirthday("08-16"), isTodayMyBirthday("08-17"), isTodayMyBirthday("07-16"));
 // Arrays & Oggetti
 
 // NOTA: l'array "movies" usato in alcuni esercizi è definito alla fine di questo file
@@ -261,7 +324,14 @@ const movies = [
   Scrivi una funzione chiamata "deleteProp" che riceve un oggetto e una stringa come parametri; deve ritornare l'oggetto fornito dopo aver eliminato
   in esso la proprietà chiamata come la stringa passata come secondo parametro.
 */
-function deleteProp(obj, str) {}
+function deleteProp(obj, str) {
+  delete obj[str];
+  return obj;
+}
+const oggetto = { name: "Rebecca", age: "26", city: "Turin" };
+const risultato2 = deleteProp(oggetto, "age");
+console.log("oggetto", risultato2);
+
 /* ESERCIZIO 12
   Scrivi una funzione chiamata "newestMovie" che trova il film più recente nell'array "movies" fornito.
 */ function newestMovie() {
@@ -355,12 +425,42 @@ console.log(searchByTitle(movies));
   Scrivi una funzione chiamata "searchAndDivide" che riceve una stringa come parametro e ritorna un oggetto contenente due array: "match" e "unmatch".
   "match" deve includere tutti i film dell'array "movies" fornito che contengono la stringa fornita all'interno del proprio titolo, mentre "unmatch" deve includere tutti i rimanenti.
 */
-function searchAndDivide() {}
+function searchAndDivide(str2) {
+  let match = [];
+  let unmatch = [];
+  for (let i = 0; i < movies.length; i++) {
+    const film = movies[i];
+    const titolo = film.Title;
+
+    let titoloStringa = titolo.includes(str2);
+
+    if (titoloStringa) {
+      match.push(film);
+    } else {
+      unmatch.push(film);
+    }
+  }
+  let oggetto = { match: match, unmatch: unmatch };
+  return oggetto;
+}
+console.log("giusto?", searchAndDivide("Lords"));
 
 /* ESERCIZIO 19
   Scrivi una funzione chiamata "removeIndex" che riceve un numero come parametro e ritorna l'array "movies" fornito privo dell'elemento nella posizione ricevuta come parametro.
 */
-
+function removeIndex(numberDelete) {
+  for (let i = 0; i < movies.length; i++) {
+    const allObj = Object.keys(movies[i]); //creo una variabile per poter accedere a tutti gli oggetti di movies (object.kays)
+    if (allObj.length > numberDelete) {
+      //se l'oggetto ha abbastanza proprietà per poter accedere alla posizione 2
+      const keyToRemove = allObj[numberDelete]; //creo una variabile che mi va aprendere solo la posizione richiesta
+      delete movies[i][keyToRemove]; //vado a cancellare all interno dei miei oggetti la posizione richiesta
+    }
+  }
+  return movies;
+}
+const risultatoIndex = removeIndex(2);
+console.log("elemento eliminato dala la posizione del parametro", risultatoIndex);
 // DOM (nota: gli elementi che selezionerai non si trovano realmente nella pagina)
 
 /* ESERCIZIO 20
@@ -405,10 +505,26 @@ function bkColor() {
 /* ESERCIZIO 24
   Scrivi una funzione per aggiungere un nuovo elemento alla lista non ordinata con id "myList".
 */
+function newElement(text) {
+  const myList = document.getElementById("myList");
+  const newLi = document.createElement("li");
+  myList.appendChild(newLi); // per collegare padre e figlio
+  newLi.innerText = text;
+}
+newElement("te pesca");
 
 /* ESERCIZIO 25
   Scrivi una funzione per svuotare la lista non ordinata con id "myList".
 */
+function deleteMyList() {
+  const myList = document.getElementById("myList");
+  const li = myList.querySelectorAll("li");
+  for (let i = 0; i < li.length; i++) {
+    const element = li[i];
+    element.remove();
+  }
+}
+deleteMyList();
 
 /* ESERCIZIO 26
   Scrivi una funzione per aggiungere ad ogni tag <tr> la classe CSS "test"
@@ -433,6 +549,16 @@ classCss();
   ***
 
 */
+function halfTree(altezza) {
+  for (let riga = 0; riga < altezza; riga++) {
+    let stringaAsterisco = "*";
+    for (let j = 0; j < riga; j++) {
+      stringaAsterisco = stringaAsterisco + "*";
+    }
+    console.log(stringaAsterisco);
+  }
+}
+halfTree(3);
 
 /* ESERCIZIO 28
   Crea una funzione chiamata "tree" che riceve un numero come parametro e costruisce un albero di "*" (asterischi) dell'altezza fornita.
